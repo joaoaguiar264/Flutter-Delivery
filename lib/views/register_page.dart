@@ -12,6 +12,7 @@ class RegisterPage extends StatelessWidget {
     TextEditingController nameController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
     TextEditingController emailController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
     return Scaffold(
@@ -22,27 +23,38 @@ class RegisterPage extends StatelessWidget {
           MyInput(
             controller: nameController,
             placeholder: 'Name',
-            type: false
+            type: false,
+            enabled: true
           ),
           MyInput(
             controller: emailController,
             placeholder: 'Email',
-            type: false
+            type: false,
+            enabled: true
           ),
           MyInput(
             controller: phoneController,
             placeholder: 'Phone Number',
-            type: false
+            type: false,
+            enabled: true
+          ),
+          MyInput(
+            controller: addressController,
+            placeholder: 'Address',
+            type: true,
+            enabled: true
           ),
           MyInput(
             controller: passwordController,
             placeholder: 'Password',
-            type: true
+            type: true,
+            enabled: true
           ),
           MyInput(
             controller: repeatPasswordController,
             placeholder: 'Repeat Password',
-            type: true
+            type: true,
+            enabled: true
           ),
           RichText(
             text: TextSpan(
@@ -66,7 +78,7 @@ class RegisterPage extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: (){
-              register(nameController.text, phoneController.text, emailController.text, passwordController.text);
+              register(nameController.text, phoneController.text, emailController.text, addressController.text, passwordController.text);
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
               // if(auth == true){
                

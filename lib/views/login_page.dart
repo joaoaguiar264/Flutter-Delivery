@@ -22,11 +22,13 @@ class LoginPage extends StatelessWidget {
             controller: emailController,
             placeholder: 'Email',
             type: false,
+            enabled: true
           ),
           MyInput(
             controller: passwordController,
             placeholder: 'Password',
             type: true,
+            enabled: true
           ),
           RichText(
             text: TextSpan(
