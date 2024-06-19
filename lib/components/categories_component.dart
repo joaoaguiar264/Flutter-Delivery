@@ -17,7 +17,7 @@ class CategoriesComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(imageUrl, height: 100, width: 150, fit: BoxFit.cover),
+          Image.network(imageUrl, height: 150, width: 100, fit: BoxFit.cover),
           SizedBox(height: 8),
           Text(title, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
         ],

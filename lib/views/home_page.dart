@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
         builder: (context, AsyncSnapshot<List> snapshot) {
           List<DocumentSnapshot> items = snapshot.data?[0];
           List<DocumentSnapshot> categories = snapshot.data?[1];
+          
           print(snapshot);
           return Scaffold(
             body: SingleChildScrollView(
@@ -47,8 +48,8 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               CategoriesComponent(
-                                imageUrl: category['Image'],
-                                title: category['Name'],
+                                imageUrl: category['image'],
+                                title: category['name'],
                               ),
                             ],
                           );
