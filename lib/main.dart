@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/home_component.dart';
 import 'package:flutter_application_1/views/account_page.dart';
 import 'package:flutter_application_1/views/feedback_page.dart';
 import 'package:flutter_application_1/views/home_page.dart';
@@ -12,7 +13,7 @@ void main(){
     theme: ThemeData(
       useMaterial3: false
     ),
-    home: HomePage(),
+    home: HomeComponent(),
     ),
   );
 }

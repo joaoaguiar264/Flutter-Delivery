@@ -18,19 +18,17 @@ login(email, password) async{
 
 register(name, phone, email, address, password) async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  var db = FirebaseFirestore.instance;
-  //var data = await db.collection('Users').doc('123').get();
-  //print(data);
-  db.collection('Users').doc('1').set({
+  
+  try {
+    var auth = FirebaseAuth.instance;
+    var db = FirebaseFirestore.instance;
+    await auth.createUserWithEmailAndPassword(email:email, password:password);
+    db.collection('Users').doc(auth.currentUser!.uid).set({
     'name': name,
     'email': email,
     'phone_number': phone,
     'address' : address,
-  });
-
-  try {
-    var auth = FirebaseAuth.instance;
-    await auth.createUserWithEmailAndPassword(email:email, password:password);
+    });
     print('ok');
     return true;
   } catch (e) {
@@ -43,7 +41,7 @@ update(name, phone, address) async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
-  var user = await db.collection('Users').doc(auth.currentUser!.uid).set({
+  db.collection('Users').doc(auth.currentUser!.uid).set({
     'name': name,
     'email' : auth.currentUser!.email,
     'address': address,
@@ -51,12 +49,31 @@ update(name, phone, address) async{
   });
 }
 send_feedback(message) async{
-  var auth = FirebaseAuth.instance;
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
-  var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
-  db.collection('Feedback').doc('1').set({
-    'message': message,
+  await db.collection('Feedback').doc('1').set({
+      'messages': FieldValue.arrayUnion([message]),
+  }, SetOptions(merge: true));
+}
+
+get_items() async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var items = await db.collection('Items').get();
+  print(items.docs);
+  items.docs.forEach((item) => {
+    print(item.data())
   });
+  return items.docs;
+}
+
+get_categories() async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var items = await db.collection('Categories').get();
+  print(items.docs);
+  items.docs.forEach((item) => {
+    print(item.data())
+  });
+  return items.docs;
 }
