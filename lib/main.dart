@@ -13,7 +13,7 @@ void main(){
     theme: ThemeData(
       useMaterial3: false
     ),
-    home: HomeComponent(),
+    home: LoginPage(),
     ),
   );
 }

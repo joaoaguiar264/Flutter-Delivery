@@ -42,7 +42,7 @@ class _AccountPageState extends State<AccountPage> {
           MyInput(
               controller: addressController,
               placeholder: 'Address',
-              type: true, enabled: true),
+              type: false, enabled: true),
           SizedBox(height: 20),
           ElevatedButton(
               onPressed: () {

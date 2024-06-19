@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/account_page.dart';
+import 'package:flutter_application_1/views/cart_page.dart';
 import 'package:flutter_application_1/views/feedback_page.dart';
 import 'package:flutter_application_1/views/home_page.dart';
 import 'package:flutter_application_1/views/wishlist_page.dart';
@@ -46,7 +47,12 @@ class _HomeComponentState extends State<HomeComponent> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartPage()),
+            );
+          },
           backgroundColor: Colors.white,
           child: Icon(Icons.shopping_cart, color: Colors.black),
         ),
@@ -64,7 +70,7 @@ class _HomeComponentState extends State<HomeComponent> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
-              label: 'Favoritos',
+              label: 'Wishlist',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat),
@@ -72,7 +78,7 @@ class _HomeComponentState extends State<HomeComponent> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Usuário',
+              label: 'Account',
             ),
           ],
           showUnselectedLabels: true,

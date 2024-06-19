@@ -41,7 +41,7 @@ class RegisterPage extends StatelessWidget {
           MyInput(
             controller: addressController,
             placeholder: 'Address',
-            type: true,
+            type: false,
             enabled: true
           ),
           MyInput(

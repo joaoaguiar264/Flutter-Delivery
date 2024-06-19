@@ -47,14 +47,13 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               CategoriesComponent(
-                                  imageUrl: category['Image'],
-                                  title: category['Name'],
-                                ),
+                                imageUrl: category['Image'],
+                                title: category['Name'],
+                              ),
                             ],
                           );
                         },
-                      )
-                  ),
+                      )),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
@@ -73,14 +72,17 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               ItemComponent(
-                                  imageUrl: item['Image'],
-                                  title: item['Name'],
-                                  price: 'R\$ ' + item['Price']),
+                                imageUrl: item['Image'],
+                                title: item['Name'],
+                                price: 'R\$ ' + item['Price'],
+                                location: item['location'],
+                                stars: item['stars'],
+                                description: item['description'],
+                              ),
                             ],
                           );
                         },
-                      )
-                  ),
+                      )),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
@@ -99,44 +101,21 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               ItemComponent(
-                                  imageUrl: item['Image'],
-                                  title: item['Name'],
-                                  price: 'R\$ ' + item['Price']),
+                                imageUrl: item['Image'],
+                                title: item['Name'],
+                                price: 'R\$ ' + item['Price'],
+                                location: item['location'],
+                                stars: item['stars'],
+                                description: item['description'],
+                              ),
                             ],
                           );
                         },
-                      )
-                  ),
+                      )),
                 ],
               ),
             ),
           );
         });
-  }
-
-  Widget _buildCategoryCard(IconData icon, String label) {
-    return Container(
-      width: 80,
-      margin: EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            child: Icon(icon, size: 30),
-          ),
-          SizedBox(height: 8),
-          Text(label, textAlign: TextAlign.center),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecommendedItemCard(String imageUrl) {
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      child: Image.network(imageUrl,
-          height: 200, width: double.infinity, fit: BoxFit.cover),
-    );
   }
 }

@@ -77,3 +77,16 @@ get_categories() async{
   });
   return items.docs;
 }
+
+get_wishlist() async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  var items = await db.collection('Users').doc(auth.currentUser!.uid).get();
+  var wishlist = items['wishlist'];
+  print(items);
+  // items.forEach((item) => {
+  //   print(item.data())
+  // });
+  return items;
+}

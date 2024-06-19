@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/firebase_connect.dart';
 
 class FeedbackPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    TextEditingController feedbackController = TextEditingController();
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -14,17 +17,18 @@ class FeedbackPage extends StatelessWidget {
               Text(
                 'Feedback',
                 textAlign: TextAlign.center, // Centraliza o texto horizontalmente
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16.0),
+
               Expanded(
                 child: Center(
                   child: TextField(
+                    controller: feedbackController,
                     maxLines: 10, // Define o número máximo de linhas na área de texto
                     textAlign: TextAlign.center, // Centraliza o texto dentro da área de texto
                     textAlignVertical: TextAlignVertical.center, // Centraliza verticalmente o texto dentro da área de texto
                     decoration: InputDecoration(
-                      hintText: 'Digite seu feedback aqui...',
+                      hintText: 'Leave your feedback here...',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -33,8 +37,7 @@ class FeedbackPage extends StatelessWidget {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Ação ao pressionar o botão "Send"
-                  // Implemente aqui a lógica para enviar o feedback
+                  send_feedback(feedbackController.text);
                 },
                 child: Text('Send'),
               ),
