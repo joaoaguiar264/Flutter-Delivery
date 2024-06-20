@@ -20,24 +20,24 @@ class LoginPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 30.0),
-            child: Text('Sign In', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+            child: Text('Sign In',
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
           ),
           MyInput(
-            controller: emailController,
-            placeholder: 'Email',
-            type: false,
-            enabled: true
-          ),
+              controller: emailController,
+              placeholder: 'Email',
+              type: false,
+              enabled: true),
           MyInput(
-            controller: passwordController,
-            placeholder: 'Password',
-            type: true,
-            enabled: true
-          ),
+              controller: passwordController,
+              placeholder: 'Password',
+              type: true,
+              enabled: true),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
-              var auth = await login(emailController.text, passwordController.text);
+              var auth =
+                  await login(emailController.text, passwordController.text);
               if (auth == true) {
                 Navigator.pushReplacement(
                   context,
@@ -52,6 +52,13 @@ class LoginPage extends StatelessWidget {
                 );
               }
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.lightBlue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 220, vertical: 15),
+            ),
             child: Text('Login'),
           ),
           SizedBox(height: 200),
@@ -62,7 +69,8 @@ class LoginPage extends StatelessWidget {
               children: [
                 TextSpan(
                   text: 'Sign up now',
-                  style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                  style: TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       Navigator.pushReplacement(

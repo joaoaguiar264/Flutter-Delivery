@@ -12,6 +12,9 @@ class WishlistPage extends StatelessWidget {
     return FutureBuilder(
       future: get_wishlist(),
       builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
         var items = snapshot.data;
         return Container(
           child: Column(
@@ -39,19 +42,17 @@ class WishlistPage extends StatelessWidget {
                             set_cart(item);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightBlue, // Cor de fundo
+                            backgroundColor: Colors.lightBlue,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  20), // Bordas arredondadas
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             padding: EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 12), // Padding interno
+                                horizontal: 24, vertical: 12),
                           ),
                           child: Text(
                             'Add to Cart',
                             style: TextStyle(
-                              color: Colors.white, // Cor do texto
+                              color: Colors.white,
                               fontSize: 16,
                             ),
                           ),

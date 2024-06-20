@@ -11,8 +11,8 @@ class FeedbackPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, 
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.end,
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Feedback',
@@ -20,11 +20,12 @@ class FeedbackPage extends StatelessWidget {
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
               ),
               //SizedBox(height: 16.0),
-              Expanded(
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Center(
                   child: TextField(
                     controller: feedbackController,
-                    maxLines: 10,
+                    maxLines: 20,
                     textAlign: TextAlign.center,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
@@ -39,6 +40,13 @@ class FeedbackPage extends StatelessWidget {
                 onPressed: () {
                   send_feedback(feedbackController.text);
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 200, vertical: 15),
+                ),
                 child: Text('Send'),
               ),
               SizedBox(height: 20.0),
@@ -49,4 +57,3 @@ class FeedbackPage extends StatelessWidget {
     );
   }
 }
-

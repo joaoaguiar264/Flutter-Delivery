@@ -12,6 +12,9 @@ class CartPage extends StatelessWidget {
     return FutureBuilder(
       future: get_cart(),
       builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
         var items = snapshot.data;
         return Scaffold(
           appBar: AppBar(
@@ -32,8 +35,7 @@ class CartPage extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio:
-                        0.75, 
+                    childAspectRatio: 0.75,
                   ),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
@@ -47,14 +49,13 @@ class CartPage extends StatelessWidget {
                 ),
                 SizedBox(height: 4),
                 Text(
-                    'Total: R\$ ' + total.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+                  'Total: R\$ ' + total.toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
+                      fontWeight: FontWeight.bold),
+                ),
                 ElevatedButton(
                   onPressed: () {
                     buy_cart(items);
@@ -62,11 +63,9 @@ class CartPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                   ),
                   child: Text(
                     'Buy',
@@ -75,7 +74,6 @@ class CartPage extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  
                 ),
               ],
             ),

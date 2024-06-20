@@ -32,22 +32,39 @@ class _AccountPageState extends State<AccountPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          MyInput(controller: nameController, placeholder: 'Name', type: false, enabled: true),
           MyInput(
-              controller: emailController, placeholder: 'Email', type: false, enabled: false),
+              controller: nameController,
+              placeholder: 'Username',
+              type: false,
+              enabled: true),
+          MyInput(
+              controller: emailController,
+              placeholder: 'Email',
+              type: false,
+              enabled: false),
           MyInput(
               controller: phoneController,
-              placeholder: 'Phone Number',
-              type: false, enabled: true),
+              placeholder: 'Phone',
+              type: false,
+              enabled: true),
           MyInput(
               controller: addressController,
               placeholder: 'Address',
-              type: false, enabled: true),
+              type: false,
+              enabled: true),
           SizedBox(height: 20),
           ElevatedButton(
               onPressed: () {
-                update(nameController.text, phoneController.text, addressController.text);
+                update(nameController.text, phoneController.text,
+                    addressController.text);
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 200, vertical: 15),
+              ),
               child: Text('Save Changes')),
         ],
       ),

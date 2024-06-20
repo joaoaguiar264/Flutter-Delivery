@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-
   DocumentSnapshot<Object?> item;
   ProductDetailsPage({Key? key, required this.item}) : super(key: key);
 
@@ -11,9 +10,7 @@ class ProductDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black
-        ),
+        iconTheme: IconThemeData(color: Colors.black),
         actions: [
           IconButton(
             icon: Icon(Icons.favorite_border),
@@ -97,12 +94,11 @@ class ProductDetailsPage extends StatelessWidget {
                     // Ação ao pressionar o botão "add to cart"
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 40.0,
-                        vertical: 16.0), // Ajusta o padding interno do botão
-                    textStyle: TextStyle(
-                        fontSize:
-                            20.0), // Ajusta o tamanho do texto dentro do botão
+                    backgroundColor: Colors.lightBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                   ),
                   child: Text('Add to Cart'),
                 ),

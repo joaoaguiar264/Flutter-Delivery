@@ -21,44 +21,39 @@ class RegisterPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 30.0),
-            child: Text('Sign Up', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+            child: Text('Sign Up',
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
           ),
           MyInput(
-            controller: nameController,
-            placeholder: 'Username',
-            type: false,
-            enabled: true
-          ),
+              controller: nameController,
+              placeholder: 'Username',
+              type: false,
+              enabled: true),
           MyInput(
-            controller: emailController,
-            placeholder: 'Email',
-            type: false,
-            enabled: true
-          ),
+              controller: emailController,
+              placeholder: 'Email',
+              type: false,
+              enabled: true),
           MyInput(
-            controller: phoneController,
-            placeholder: 'Phone',
-            type: false,
-            enabled: true
-          ),
+              controller: phoneController,
+              placeholder: 'Phone',
+              type: false,
+              enabled: true),
           MyInput(
-            controller: addressController,
-            placeholder: 'Address',
-            type: false,
-            enabled: true
-          ),
+              controller: addressController,
+              placeholder: 'Address',
+              type: false,
+              enabled: true),
           MyInput(
-            controller: passwordController,
-            placeholder: 'Password',
-            type: true,
-            enabled: true
-          ),
+              controller: passwordController,
+              placeholder: 'Password',
+              type: true,
+              enabled: true),
           MyInput(
-            controller: repeatPasswordController,
-            placeholder: 'Confirm Password',
-            type: true,
-            enabled: true
-          ),
+              controller: repeatPasswordController,
+              placeholder: 'Confirm Password',
+              type: true,
+              enabled: true),
           RichText(
             text: TextSpan(
               text: 'Already has a account? ',
@@ -66,7 +61,8 @@ class RegisterPage extends StatelessWidget {
               children: [
                 TextSpan(
                   text: 'Sing In',
-                  style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                  style: TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       Navigator.pushReplacement(
@@ -80,23 +76,35 @@ class RegisterPage extends StatelessWidget {
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: (){
-              register(nameController.text, phoneController.text, emailController.text, addressController.text, passwordController.text);
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-              // if(auth == true){
-               
-              // }
-              // else{
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(
-              //       content: Text('Alguma informação ta errada ai'),
-              //       backgroundColor: Colors.red,
-              //     ),
-              //   );
-              // }
-            }, 
-            child: Text('Register')
-          ),
+              onPressed: () {
+                register(
+                    nameController.text,
+                    phoneController.text,
+                    emailController.text,
+                    addressController.text,
+                    passwordController.text);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+                // if(auth == true){
+
+                // }
+                // else{
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     SnackBar(
+                //       content: Text('Alguma informação ta errada ai'),
+                //       backgroundColor: Colors.red,
+                //     ),
+                //   );
+                // }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 220, vertical: 15),
+              ),
+              child: Text('Register')),
         ],
       ),
     );

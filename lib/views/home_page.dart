@@ -15,6 +15,9 @@ class HomePage extends StatelessWidget {
           get_categories(),
         ]),
         builder: (context, AsyncSnapshot<List> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
           List<DocumentSnapshot> items = snapshot.data?[0];
           List<DocumentSnapshot> categories = snapshot.data?[1];
           print(snapshot);
@@ -47,9 +50,7 @@ class HomePage extends StatelessWidget {
                           var category = categories[index];
                           return Row(
                             children: [
-                              CategoriesComponent(
-                                category: category
-                              ),
+                              CategoriesComponent(category: category),
                             ],
                           );
                         },
@@ -95,9 +96,7 @@ class HomePage extends StatelessWidget {
                           var item = items[index + 3];
                           return Row(
                             children: [
-                              RecommendedComponent(
-                                item: item
-                              ),
+                              RecommendedComponent(item: item),
                             ],
                           );
                         },
