@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/categories_component.dart';
 import 'package:flutter_application_1/components/item_component.dart';
+import 'package:flutter_application_1/components/recommended_component.dart';
 import 'package:flutter_application_1/services/firebase_connect.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,7 +17,6 @@ class HomePage extends StatelessWidget {
         builder: (context, AsyncSnapshot<List> snapshot) {
           List<DocumentSnapshot> items = snapshot.data?[0];
           List<DocumentSnapshot> categories = snapshot.data?[1];
-          
           print(snapshot);
           return Scaffold(
             body: SingleChildScrollView(
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                      height: 200,
+                      height: 150,
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -48,8 +48,7 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               CategoriesComponent(
-                                imageUrl: category['image'],
-                                title: category['name'],
+                                category: category
                               ),
                             ],
                           );
@@ -63,7 +62,7 @@ class HomePage extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                      height: 200,
+                      height: 220,
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -73,12 +72,7 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               ItemComponent(
-                                imageUrl: item['Image'],
-                                title: item['Name'],
-                                price: 'R\$ ' + item['Price'],
-                                location: item['location'],
-                                stars: item['stars'],
-                                description: item['description'],
+                                item: item,
                               ),
                             ],
                           );
@@ -92,22 +86,17 @@ class HomePage extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                      height: 200,
+                      height: 205,
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: items.length,
+                        itemCount: items.length - 3,
                         itemBuilder: (context, index) {
-                          var item = items[index];
+                          var item = items[index + 3];
                           return Row(
                             children: [
-                              ItemComponent(
-                                imageUrl: item['Image'],
-                                title: item['Name'],
-                                price: 'R\$ ' + item['Price'],
-                                location: item['location'],
-                                stars: item['stars'],
-                                description: item['description'],
+                              RecommendedComponent(
+                                item: item
                               ),
                             ],
                           );

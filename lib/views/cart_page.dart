@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/item_component.dart';
 import 'package:flutter_application_1/services/firebase_connect.dart';
 
 class CartPage extends StatelessWidget {
@@ -7,49 +8,80 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //double total = products.fold(0, (sum, item) => sum + item.price);
-
+    double total = 0;
     return FutureBuilder(
-      future: get_wishlist(),
-      builder: (context, AsyncSnapshot snapshot){
-        var user = snapshot.data;
-        var items = user['wishlist'];
-        return Container(
-          child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.all(2),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 1
+      future: get_cart(),
+      builder: (context, AsyncSnapshot snapshot) {
+        var items = snapshot.data;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Carrinho de Compras'),
+            elevation: 20,
+            backgroundColor: Colors.white,
+            iconTheme: IconThemeData(color: Colors.black),
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio:
+                        0.75, 
+                  ),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    var item = items[index];
+                    double value = double.parse(item['price']);
+                    print(value);
+                    total += value;
+                    print(total);
+                    return ItemComponent(item: item);
+                  },
                 ),
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
+                SizedBox(height: 4),
+                Text(
+                    'Total: R\$ ' + total.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold
                     ),
-                    
-                  );
-                },
-              ),
+                  ),
+                ElevatedButton(
+                  onPressed: () {
+                    buy_cart(items);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                  ),
+                  child: Text(
+                    'Buy',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-      } ,
+          ),
+        );
+      },
     );
   }
 }

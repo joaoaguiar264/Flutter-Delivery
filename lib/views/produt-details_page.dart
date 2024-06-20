@@ -1,14 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsPage extends StatelessWidget {
 
-  String imageUrl;
-  String title;
-  String price;
-  String location;
-  String stars;
-  String description;
-  ProductDetailsPage({Key? key, required this.imageUrl, required this.title, required this.price, required this.location, required this.stars, required this.description}) : super(key: key);
+  DocumentSnapshot<Object?> item;
+  ProductDetailsPage({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +33,7 @@ class ProductDetailsPage extends StatelessWidget {
             children: [
               Center(
                 child: Image.network(
-                  imageUrl,
+                  item['image'],
                   width: 250,
                   height: 250,
                   fit: BoxFit.cover,
@@ -48,14 +44,14 @@ class ProductDetailsPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      title,
+                      item['name'],
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(width: 8.0),
                   Text(
-                    price,
+                    'R\$ ' + item['price'],
                     style: TextStyle(fontSize: 20.0, color: Colors.green),
                   ),
                 ],
@@ -65,7 +61,7 @@ class ProductDetailsPage extends StatelessWidget {
                 children: [
                   Icon(Icons.location_pin),
                   Text(
-                    location,
+                    item['location'],
                     style: TextStyle(fontSize: 16.0),
                   ),
                 ],
@@ -76,7 +72,7 @@ class ProductDetailsPage extends StatelessWidget {
                   Icon(Icons.star, color: Colors.yellow),
                   SizedBox(width: 4.0),
                   Text(
-                    stars,
+                    item['stars'],
                     style: TextStyle(fontSize: 16.0),
                   ),
                 ],
@@ -90,7 +86,7 @@ class ProductDetailsPage extends StatelessWidget {
                 ),
               ),
               Text(
-                description,
+                item['description'],
                 style: TextStyle(fontSize: 16.0),
               ),
               SizedBox(height: 16.0),

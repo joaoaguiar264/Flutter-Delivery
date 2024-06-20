@@ -19,10 +19,13 @@ class RegisterPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FlutterLogo(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Text('Sign Up', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+          ),
           MyInput(
             controller: nameController,
-            placeholder: 'Name',
+            placeholder: 'Username',
             type: false,
             enabled: true
           ),
@@ -34,7 +37,7 @@ class RegisterPage extends StatelessWidget {
           ),
           MyInput(
             controller: phoneController,
-            placeholder: 'Phone Number',
+            placeholder: 'Phone',
             type: false,
             enabled: true
           ),
@@ -52,17 +55,17 @@ class RegisterPage extends StatelessWidget {
           ),
           MyInput(
             controller: repeatPasswordController,
-            placeholder: 'Repeat Password',
+            placeholder: 'Confirm Password',
             type: true,
             enabled: true
           ),
           RichText(
             text: TextSpan(
-              text: 'Já possui conta? ',
+              text: 'Already has a account? ',
               style: TextStyle(color: Colors.black),
               children: [
                 TextSpan(
-                  text: 'Logar',
+                  text: 'Sing In',
                   style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {

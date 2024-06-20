@@ -28,6 +28,12 @@ class _HomeComponentState extends State<HomeComponent> {
         appBar: AppBar(
           elevation: 20,
           backgroundColor: Colors.white,
+          leading: Container(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Image.asset(
+              'lib/assets/Logo.png',
+            ),
+          ),
           title: Text(
             "NeedFood",
             style: TextStyle(
@@ -57,6 +63,7 @@ class _HomeComponentState extends State<HomeComponent> {
           child: Icon(Icons.shopping_cart, color: Colors.black),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.black,
           currentIndex: selectedPage,

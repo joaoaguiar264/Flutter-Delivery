@@ -18,7 +18,10 @@ class LoginPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FlutterLogo(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Text('Sign In', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+          ),
           MyInput(
             controller: emailController,
             placeholder: 'Email',
@@ -30,25 +33,6 @@ class LoginPage extends StatelessWidget {
             placeholder: 'Password',
             type: true,
             enabled: true
-          ),
-          RichText(
-            text: TextSpan(
-              text: 'Não possui conta? ',
-              style: TextStyle(color: Colors.black),
-              children: [
-                TextSpan(
-                  text: 'Registre-se',
-                  style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
-                      );
-                    },
-                ),
-              ],
-            ),
           ),
           SizedBox(height: 20),
           ElevatedButton(
@@ -70,7 +54,26 @@ class LoginPage extends StatelessWidget {
             },
             child: Text('Login'),
           ),
-          
+          SizedBox(height: 200),
+          RichText(
+            text: TextSpan(
+              text: 'No account yet? ',
+              style: TextStyle(color: Colors.black),
+              children: [
+                TextSpan(
+                  text: 'Sign up now',
+                  style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
+                    },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

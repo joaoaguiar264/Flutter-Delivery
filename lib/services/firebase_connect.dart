@@ -48,6 +48,7 @@ update(name, phone, address) async{
     'phone_number': phone
   });
 }
+
 send_feedback(message) async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
@@ -78,15 +79,65 @@ get_categories() async{
   return items.docs;
 }
 
+set_cart(item) async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  await db.collection('Users').doc(auth.currentUser!.uid).set({
+    'cart': FieldValue.arrayUnion([item]),
+  }, SetOptions(merge: true));
+}
+
+get_cart() async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
+  var cart = user['cart'];
+  var itemsQuery = await db.collection('Items').where(FieldPath.documentId, whereIn: cart).get();
+  var items = itemsQuery.docs.map((doc) => doc.data()).toList();
+  print(itemsQuery.docs);
+  return itemsQuery.docs;
+}
+
+buy_cart(items) async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  await db.collection('Users').doc(auth.currentUser!.uid).set({
+    'historic': FieldValue.arrayUnion([items]),
+  }, SetOptions(merge: true));
+}
+
 get_wishlist() async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
-  var items = await db.collection('Users').doc(auth.currentUser!.uid).get();
-  var wishlist = items['wishlist'];
-  print(items);
-  // items.forEach((item) => {
-  //   print(item.data())
-  // });
-  return items;
+  var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
+  var wishlist = user['wishlist'];
+  var itemsQuery = await db.collection('Items').where(FieldPath.documentId, whereIn: wishlist).get();
+  var items = itemsQuery.docs.map((doc) => doc.data()).toList();
+  print(itemsQuery.docs);
+  return itemsQuery.docs;
 }
+
+set_wishlist(id) async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  var user = await db.collection('Users').doc(auth.currentUser!.uid).set({
+    'wishlist': FieldValue.arrayUnion([id]),
+  }, SetOptions(merge: true));
+  // var wishlist = user['wishlist'];
+  // if(wishlist.contains(id)){
+  //   user['wishlist'].where(FieldPath.documentId, whereIn: wishlist).delete();
+  // }
+  // else{
+
+  // }
+  // var itemsQuery = await db.collection('Items').where(FieldPath.documentId, whereIn: wishlist).get();
+  // var items = itemsQuery.docs.map((doc) => doc.data()).toList();
+  // print(items);
+  // return items;
+}
+
