@@ -2,8 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/home_component.dart';
 import 'package:flutter_application_1/services/firebase_connect.dart';
-import 'package:flutter_application_1/views/home_page.dart';
-import 'package:flutter_application_1/views/register_page.dart'; // Certifique-se de importar a RegisterPage
+import 'package:flutter_application_1/views/register_page.dart';
 import '../components/my_input.dart';
 
 class LoginPage extends StatelessWidget {

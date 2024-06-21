@@ -58,11 +58,23 @@ send_feedback(message) async {
 }
 
 get_items() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
-  var items = await db.collection('Items').get();
-  items.docs.forEach((item) => {print(item.data())});
-  return items.docs;
+  var itens = await db.collection('Items').get();
+
+  var retorno = await Future.wait(itens.docs.map((doc) async {
+    var data = doc.data();
+
+    return {
+      'name': data['name'] ?? '',
+      'image': data['image'],
+      'location': data['location'] ?? '',
+      'price': data['price']?.toString() ?? '0',
+      'description': data['description'] ?? '',
+      'stars': data['stars'] ?? ''
+    };
+  }).toList());
+
+  return retorno;
 }
 
 get_categories() async {
@@ -73,14 +85,12 @@ get_categories() async {
   return items.docs;
 }
 
-set_cart(List<dynamic> item) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+set_cart(item) async {
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
-  print(item);
   try {
     await db.collection('Users').doc(auth.currentUser!.uid).update({
-      'cart': FieldValue.arrayUnion(item),
+      'cart': FieldValue.arrayUnion([item]),
     });
   } catch (e) {
     print(e);
@@ -96,6 +106,20 @@ get_cart() async{
   return cart;
 }
 
+remove_cart(item) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  try {
+    await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'cart': FieldValue.arrayRemove([item])
+      });
+
+  } catch (e) {
+    return 'Erro ao atualizar favoritos: $e';
+  }
+}
+
 buy_cart(items) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
@@ -105,34 +129,43 @@ buy_cart(items) async {
   }, SetOptions(merge: true));
 }
 
-get_wishlist() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  var db = FirebaseFirestore.instance;
+Future<bool> isInWishlist(product) async {
   var auth = FirebaseAuth.instance;
-  var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
-  var wishlist = user['wishlist'];
-  var itemsQuery = await db
-      .collection('Items')
-      .where(FieldPath.documentId, whereIn: wishlist)
-      .get();
-
-  var items = itemsQuery.docs.toList();
-  print('AQUI CARALHOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-  print(itemsQuery.docs);
-  return itemsQuery.docs;
+  var db = FirebaseFirestore.instance;
+  var userDoc = await db.collection('Users').doc(auth.currentUser!.uid).get();
+  List favorites = userDoc.data()?['wishlist'] ?? [];
+  return favorites.any((item) => item['name'] == product['name']);
 }
-
 
 set_wishlist(item) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
-  print("aqui foi");
   try {
-    await db.collection('Users').doc(auth.currentUser!.uid).set({
-      'wishlist': FieldValue.arrayUnion(item),
-    }, SetOptions(merge: true));
+    var userDoc = await db.collection('Users').doc(auth.currentUser!.uid).get();
+    List wishlist = userDoc.data()?['wishlist'] ?? [];
+    if (wishlist.any((favorite) => favorite['name'] == item['name'])) {
+      await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'wishlist': FieldValue.arrayRemove([item])
+      });
+      return 'Product removes from wishlist.';
+    } else {
+      await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'wishlist': FieldValue.arrayUnion([item])
+      });
+      return 'Product added to wishlist.';
+    }
   } catch (e) {
-    print(e);
+    return e;
   }
 }
+
+get_wishlist() async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var auth = FirebaseAuth.instance;
+  var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
+  var wishlist = user['wishlist'];
+  return wishlist;
+}
+

@@ -1,10 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/firebase_connect.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   var item;
   ProductDetailsPage({Key? key, required this.item}) : super(key: key);
+
+  @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  bool isFavorite = false;
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorite();
+  }
+
+  Future<void> _checkIfFavorite() async {
+    bool favorite = await isInWishlist(widget.item);
+    setState(() {
+      isFavorite = favorite;
+    });
+  }
+
+  Future<void> _toggleFavorite() async {
+    String message = await set_wishlist(widget.item);
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +41,11 @@ class ProductDetailsPage extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border),
-            color: Colors.black,
-            onPressed: () {
-              set_wishlist(item);
-            },
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+            ),
+            color: Colors.red,
+            onPressed: _toggleFavorite,  
           ),
         ],
       ),
@@ -31,7 +58,7 @@ class ProductDetailsPage extends StatelessWidget {
             children: [
               Center(
                 child: Image.network(
-                  item['image'],
+                  widget.item['image'],
                   width: 250,
                   height: 250,
                   fit: BoxFit.cover,
@@ -42,14 +69,14 @@ class ProductDetailsPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      item['name'],
+                      widget.item['name'],
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(width: 8.0),
                   Text(
-                    'R\$ ' + item['price'],
+                    'R\$ ' + widget.item['price'],
                     style: TextStyle(fontSize: 20.0, color: Colors.green),
                   ),
                 ],
@@ -59,7 +86,7 @@ class ProductDetailsPage extends StatelessWidget {
                 children: [
                   Icon(Icons.location_pin),
                   Text(
-                    item['location'],
+                    widget.item['location'],
                     style: TextStyle(fontSize: 16.0),
                   ),
                 ],
@@ -70,7 +97,7 @@ class ProductDetailsPage extends StatelessWidget {
                   Icon(Icons.star, color: Colors.yellow),
                   SizedBox(width: 4.0),
                   Text(
-                    item['stars'],
+                    widget.item['stars'],
                     style: TextStyle(fontSize: 16.0),
                   ),
                 ],
@@ -84,7 +111,7 @@ class ProductDetailsPage extends StatelessWidget {
                 ),
               ),
               Text(
-                item['description'],
+                widget.item['description'],
                 style: TextStyle(fontSize: 16.0),
               ),
               SizedBox(height: 16.0),
@@ -92,7 +119,13 @@ class ProductDetailsPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 300.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    set_cart(item);
+                    set_cart(widget.item);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Item added to your cart.'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/categories_component.dart';
 import 'package:flutter_application_1/components/item_component.dart';
@@ -18,9 +17,8 @@ class HomePage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          List<DocumentSnapshot> items = snapshot.data?[0];
-          List<DocumentSnapshot> categories = snapshot.data?[1];
-          print(snapshot);
+          var items = snapshot.data?[0];
+          var categories = snapshot.data?[1];
           return Scaffold(
             body: SingleChildScrollView(
               child: Column(
@@ -70,8 +68,6 @@ class HomePage extends StatelessWidget {
                         itemCount: items.length,
                         itemBuilder: (context, index) {
                           var item = items[index];
-                          print("TA AQUI CARALHOOOOOOOOOOOOOO");
-                          print(item);
                           return Row(
                             children: [
                               ItemComponent(

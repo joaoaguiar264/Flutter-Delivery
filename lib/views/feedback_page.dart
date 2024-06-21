@@ -12,14 +12,12 @@ class FeedbackPage extends StatelessWidget {
           padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Feedback',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
               ),
-              //SizedBox(height: 16.0),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Center(
@@ -38,7 +36,24 @@ class FeedbackPage extends StatelessWidget {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  send_feedback(feedbackController.text);
+                  if (feedbackController.text.isNotEmpty) {
+                    send_feedback(feedbackController.text);
+                    feedbackController.text = "";
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Feedback sent.'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Feedback cannot be empty.'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,

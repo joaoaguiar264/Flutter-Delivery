@@ -85,17 +85,6 @@ class RegisterPage extends StatelessWidget {
                     passwordController.text);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
-                // if(auth == true){
-
-                // }
-                // else{
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     SnackBar(
-                //       content: Text('Alguma informação ta errada ai'),
-                //       backgroundColor: Colors.red,
-                //     ),
-                //   );
-                // }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlue,

@@ -14,7 +14,6 @@ class HomeComponent extends StatefulWidget {
 
 class _HomeComponentState extends State<HomeComponent> {
   List pages = [
-    //SingleChildScrollView(child: HomePage()),
     HomePage(),
     WishlistPage(),
     FeedbackPage(),

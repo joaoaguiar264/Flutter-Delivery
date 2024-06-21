@@ -7,7 +7,6 @@ class WishlistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //double total = products.fold(0, (sum, item) => sum + item.price);
 
     return FutureBuilder(
       future: get_wishlist(),
@@ -31,7 +30,6 @@ class WishlistPage extends StatelessWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     var item = items[index];
-                    print(item);
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -40,7 +38,7 @@ class WishlistPage extends StatelessWidget {
                         SizedBox(height: 4),
                         ElevatedButton(
                           onPressed: () async {
-                            await set_cart(item.data());
+                            await set_cart(item);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightBlue,
