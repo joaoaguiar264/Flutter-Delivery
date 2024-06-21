@@ -70,6 +70,8 @@ class HomePage extends StatelessWidget {
                         itemCount: items.length,
                         itemBuilder: (context, index) {
                           var item = items[index];
+                          print("TA AQUI CARALHOOOOOOOOOOOOOO");
+                          print(item);
                           return Row(
                             children: [
                               ItemComponent(

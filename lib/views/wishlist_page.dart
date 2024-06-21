@@ -31,6 +31,7 @@ class WishlistPage extends StatelessWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     var item = items[index];
+                    print(item);
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -38,8 +39,8 @@ class WishlistPage extends StatelessWidget {
                         ItemComponent(item: item),
                         SizedBox(height: 4),
                         ElevatedButton(
-                          onPressed: () {
-                            set_cart(item);
+                          onPressed: () async {
+                            await set_cart(item.data());
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightBlue,

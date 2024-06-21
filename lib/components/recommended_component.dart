@@ -5,7 +5,7 @@ import 'package:flutter_application_1/views/produt-details_page.dart';
 
 class RecommendedComponent extends StatelessWidget {
 
-  DocumentSnapshot<Object?> item;
+  var item;
   RecommendedComponent({Key? key, required this.item}) : super(key: key);
 
   @override

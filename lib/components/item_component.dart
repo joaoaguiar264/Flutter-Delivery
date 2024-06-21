@@ -6,9 +6,7 @@ import 'package:flutter_application_1/views/produt-details_page.dart';
 
 class ItemComponent extends StatelessWidget {
 
-  DocumentSnapshot<Object?> item;
-
-  
+  var item;
   ItemComponent({Key? key, required this.item}) : super(key: key);
 
   @override
@@ -42,7 +40,7 @@ class ItemComponent extends StatelessWidget {
             SizedBox(height: 10),
             Text(item['name'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
-            Text('R\$ ' + item['price'], style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
+            Text('R\$ ${item['price']}', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),
       ),

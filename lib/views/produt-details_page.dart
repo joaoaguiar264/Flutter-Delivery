@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/firebase_connect.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  DocumentSnapshot<Object?> item;
+  var item;
   ProductDetailsPage({Key? key, required this.item}) : super(key: key);
 
   @override
@@ -16,7 +17,7 @@ class ProductDetailsPage extends StatelessWidget {
             icon: Icon(Icons.favorite_border),
             color: Colors.black,
             onPressed: () {
-              // Ação ao pressionar o ícone de favoritos
+              set_wishlist(item);
             },
           ),
         ],
@@ -91,7 +92,7 @@ class ProductDetailsPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 300.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Ação ao pressionar o botão "add to cart"
+                    set_cart(item);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,

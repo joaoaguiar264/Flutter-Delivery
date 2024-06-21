@@ -16,6 +16,8 @@ class CartPage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         var items = snapshot.data;
+        print("ITEMS AAAAAAAAA");
+        print(items);
         return Scaffold(
           appBar: AppBar(
             title: Text('Carrinho de Compras'),
@@ -41,9 +43,10 @@ class CartPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     var item = items[index];
                     double value = double.parse(item['price']);
-                    print(value);
+                    //print('valor: ' + value.toString());
                     total += value;
-                    print(total);
+                    //print("total"+ total.toString());
+                    //print(item);
                     return ItemComponent(item: item);
                   },
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CategoriesComponent extends StatelessWidget {
-  DocumentSnapshot<Object?> category;
+  var category;
   CategoriesComponent({Key? key, required this.category})
       : super(key: key);
 
