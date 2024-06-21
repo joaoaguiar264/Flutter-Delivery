@@ -7,7 +7,6 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double total = 0;
     return FutureBuilder(
       future: get_cart(),
       builder: (context, AsyncSnapshot snapshot) {
@@ -15,6 +14,8 @@ class CartPage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         var items = snapshot.data;
+        double total =
+            items.fold(0, (sum, item) => sum + double.parse(item['price']));
         return Scaffold(
           appBar: AppBar(
             title: Text('Carrinho de Compras'),
@@ -42,8 +43,6 @@ class CartPage extends StatelessWidget {
                         itemCount: items.length,
                         itemBuilder: (context, index) {
                           var item = items[index];
-                          double value = double.parse(item['price']);
-                          total += value;
                           return Column(
                             children: [
                               ItemComponent(item: item),
@@ -76,7 +75,6 @@ class CartPage extends StatelessWidget {
                   ),
                 ),
               ),
-              
               Text(
                 'Total: R\$ ' + total.toString(),
                 textAlign: TextAlign.center,
@@ -89,14 +87,34 @@ class CartPage extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 child: ElevatedButton(
                   onPressed: () {
-                    buy_cart(items);
+                    print("AQUIIII");
+                    print(items.length);
+                    if (items.length > 0) {
+                      buy_cart(items);
+                      clearCart();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              'Purchased made, your items will arrive soon!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Your cart is empty.'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                   ),
                   child: Text(
                     'Buy',

@@ -8,8 +8,6 @@ class CategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    double total = 0;
     return FutureBuilder(
       future: get_categoryItems(category),
       builder: (context, AsyncSnapshot snapshot) {
@@ -45,7 +43,6 @@ class CategoryPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var item = items[index];
                           double value = double.parse(item['price']);
-                          total += value;
                           return Column(
                             children: [
                               ItemComponent(item: item),

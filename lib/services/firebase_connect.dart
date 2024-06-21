@@ -82,7 +82,6 @@ get_categoryItems(category) async {
   var querySnapshot = await db.collection('Items').where('category', isEqualTo: category['name']).get();
   var retorno = await Future.wait(querySnapshot.docs.map((doc) async {
     var data = doc.data();
-
       return {
       'name': data['name'] ?? '',
       'image': data['image'],
@@ -141,12 +140,38 @@ remove_cart(item) async {
 }
 
 buy_cart(items) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
-  await db.collection('Users').doc(auth.currentUser!.uid).set({
-    'historic': FieldValue.arrayUnion([items]),
-  }, SetOptions(merge: true));
+  var db = FirebaseFirestore.instance;
+
+  try {
+    for (var item in items) {
+      await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'historic': FieldValue.arrayUnion([item])
+      });
+    }
+  }
+  catch (e) {
+    return e;
+  }
+}
+
+clearCart() async {
+  var auth = FirebaseAuth.instance;
+  var db = FirebaseFirestore.instance;
+
+  try {
+    var userDoc = await db.collection('Users').doc(auth.currentUser!.uid).get();
+    List cart = userDoc.data()?['cart'] ?? [];
+
+    cart.forEach((product) async {
+      await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'cart': FieldValue.arrayRemove([product])
+      });
+    });
+  }
+  catch (e) {
+    return e;
+  }
 }
 
 Future<bool> isInWishlist(product) async {
