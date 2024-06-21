@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/home_component.dart';
 import 'package:flutter_application_1/components/item_component.dart';
 import 'package:flutter_application_1/services/firebase_connect.dart';
 
@@ -50,6 +51,11 @@ class CartPage extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () {
                                   remove_cart(item);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeComponent()),
+                                  );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red,

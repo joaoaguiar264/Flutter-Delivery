@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/home_component.dart';
 import 'package:flutter_application_1/components/item_component.dart';
 import 'package:flutter_application_1/services/firebase_connect.dart';
 
@@ -7,7 +8,6 @@ class WishlistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: get_wishlist(),
       builder: (context, AsyncSnapshot snapshot) {
@@ -39,6 +39,12 @@ class WishlistPage extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () async {
                             await set_cart(item);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Item added to your cart.'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightBlue,

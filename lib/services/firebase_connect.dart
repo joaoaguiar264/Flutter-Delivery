@@ -41,7 +41,7 @@ update(name, phone, address) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
-  db.collection('Users').doc(auth.currentUser!.uid).set({
+  db.collection('Users').doc(auth.currentUser!.uid).update({
     'name': name,
     'email': auth.currentUser!.email,
     'address': address,
@@ -121,7 +121,7 @@ get_cart() async{
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
   var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
-  var cart = user['cart'];
+  var cart = user.data()?['cart'] ?? [];
   return cart;
 }
 
@@ -193,7 +193,7 @@ set_wishlist(item) async {
       await db.collection('Users').doc(auth.currentUser!.uid).update({
         'wishlist': FieldValue.arrayRemove([item])
       });
-      return 'Product removes from wishlist.';
+      return 'Product removed from wishlist.';
     } else {
       await db.collection('Users').doc(auth.currentUser!.uid).update({
         'wishlist': FieldValue.arrayUnion([item])
@@ -210,7 +210,7 @@ get_wishlist() async{
   var db = FirebaseFirestore.instance;
   var auth = FirebaseAuth.instance;
   var user = await db.collection('Users').doc(auth.currentUser!.uid).get();
-  var wishlist = user['wishlist'];
+  var wishlist = user.data()?['wishlist'] ?? [];
   return wishlist;
 }
 
