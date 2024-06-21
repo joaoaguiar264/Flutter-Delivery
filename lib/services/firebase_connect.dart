@@ -77,6 +77,26 @@ get_items() async {
   return retorno;
 }
 
+get_categoryItems(category) async {
+  var db = FirebaseFirestore.instance;
+  var querySnapshot = await db.collection('Items').where('category', isEqualTo: category['name']).get();
+  var retorno = await Future.wait(querySnapshot.docs.map((doc) async {
+    var data = doc.data();
+
+      return {
+      'name': data['name'] ?? '',
+      'image': data['image'],
+      'location': data['location'] ?? '',
+      'price': data['price']?.toString() ?? '0',
+      'description': data['description'] ?? '',
+      'stars': data['stars'] ?? ''
+    };
+    
+    
+  }).toList());
+  return retorno;
+}
+
 get_categories() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   var db = FirebaseFirestore.instance;
